@@ -7,6 +7,125 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 </head>
 <body ng-app="BlankApp" ng-cloak>
+ Theming -  Mulai
+Ikhtisar
+Fitur Tata Letak AngularJS Material menyediakan gula untuk memungkinkan pengembang lebih mudah membuat tata letak modern dan responsif di atas flexbox CSS3 . API tata letak terdiri dari serangkaian arahan AngularJS yang dapat diterapkan ke salah satu konten HTML aplikasi Anda.
+
+Menggunakan Direktif HTML sebagai API menyediakan cara mudah untuk menetapkan nilai (misalnya. layout="row") Dan membantu dengan pemisahan kekhawatiran: Atribut menentukan tata letak sementara kelas CSS menetapkan gaya.
+
+API Markup HTML	Nilai yang diizinkan (mentah atau diinterpolasi)
+tata letak	row | column
+melenturkan	integer (kelipatan 5 untuk 0% -> 100%, 100% / 3, 200% / 3)
+flex-order	nilai integer dari -20 hingga 20
+flex-offset	bilangan bulat (kelipatan 5 untuk 0% -> 95%, 100% / 3, 200% / 3)
+layout-align	start|center|end|space-around|space-between start|center|end|stretch
+tata-letak	
+layout-wrap	
+layout-nowrap	
+layout-margin	
+tata-letak	
+menunjukkan	
+menyembunyikan	
+Dan jika kita menggunakan Breakpoints sebagaimana ditentukan dalam Desain Material:
+
+
+
+Kita dapat mengaitkan breakpoint dengan definisi mediaQuery menggunakan alias breakpoint (es) :
+
+Breakpoint	MediaQuery (rentang piksel)
+xs	'(lebar maksimal: 599 piks)'
+gt-xs	'(Lebar min: 600 piks)'
+sm	'(Lebar min: 600 px) dan (lebar maksimal: 959 piks)'
+gt-sm	'(Lebar min: 960 piks)'
+md	'(Lebar min: 960 px) dan (lebar maksimal: 1279 piks)'
+gt-md	'(Lebar min: 1280 piks)'
+lg	'(Lebar min: 1280 px) dan (lebar maksimal: 1919 piks)'
+gt-lg	'(Lebar min: 1920 piks)'
+xl	'(Lebar min: 1920 piks)'
+API dengan Breakpoint Responsif
+Sekarang kita dapat menggabungkan breakpoint aliasdengan API Layout untuk dengan mudah mendukung breakpoint Responsif dengan konvensi tata letak Layout sederhana kami. Ini aliashanya digunakan sebagai ekstensi sufiks untuk kata kunci API Layout. 
+misalnya
+
+Notasi ini menghasilkan, misalnya, tabel berikut untuk layoutdan flexAPI:
+
+tata letak API	flex API	Aktifkan saat perangkat
+tata letak	melenturkan	Setel arah tata letak default & fleksibel kecuali diganti dengan breakpoint lain.
+tata letak-xs	flex-xs	lebarnya < 600 px
+tata letak-gt-xs	flex-gt-xs	width> = 600 px
+tata letak-sm	flex-sm	600 px <= lebar < 960 piks
+tata letak-gt-sm	flex-gt-sm	width> = 960 px
+tata letak-md	flex-md	960 pks <= lebar < 1280 px
+tata letak-gt-md	flex-gt-md	width> = 1280 px
+tata letak-lg	flex-lg	1280 px <= lebar < 1920 px
+tata letak-gt-lg	flex-gt-lg	width> = 1920 px
+tata letak-xl	flex-xl	width> = 1920 px
+Di bawah ini adalah contoh penggunaan API Tata Letak Responsif:
+
+<div layout="column" class="zero">
+
+  <div flex="33" flex-md="{{ vm.box1Width }}" class="one"></div>
+  <div flex="33" layout="{{ vm.direction }}" layout-md="row" class="two">
+
+    <div flex="20" flex-md="10" hide-lg class="two_one"></div>
+    <div flex="30px" show hide-md="{{ vm.hideBox }}" flex-md="25" class="two_two"></div>
+    <div flex="20" flex-md="65" class="two_three"></div>
+
+  </div>
+  <div flex class="three"></div>
+
+</div>
+
+API Layout ini berarti jauh lebih mudah untuk mengatur dan memelihara tata letak flexbox vs mendefinisikan semuanya melalui CSS. Pengembang menggunakan API HTML Layout untuk menentukan niat dan mesin Layout menangani semua masalah styling CSS flexbox.
+
+Mesin Layout akan mencatat peringatan konsol ketika menemukan konflik atau masalah yang diketahui.
+
+
+
+
+Dibawah tenda
+Karena masalah kinerja saat menggunakan Atribut Selectors dengan browser Internet Explorer ; lihat yang berikut untuk lebih jelasnya:
+
+Tata letak Layout secara dinamis menghasilkan pemilih kelas saat runtime. Dan Layout CSS classNames dan styles masing-masing telah ditentukan sebelumnya di angular-material.cssstylesheet.
+
+Pengembang harus terus menggunakan petunjuk Tata Letak dalam markup HTML karena kelas dapat berubah di antara rilis.
+
+Mari kita lihat bagaimana transformasi directive-to-className ini bekerja. Pertimbangkan penggunaan sederhana layoutdan flexarahan (API):
+
+<div>
+
+  <div layout="row">
+
+    <div flex>First item in row</div>
+    <div flex="20">Second item in row</div>
+
+  </div>
+  <div layout="column">
+
+    <div flex="66">First item in column</div>
+    <div flex="33">Second item in column</div>
+
+  </div>
+
+</div>
+Saat runtime, atribut ini diubah menjadi kelas CSS.
+
+<div>
+
+  <div class="ng-scope layout-row">
+
+    <div class="flex">First item in row</div>
+    <div class="flex-20">Second item in row</div>
+
+  </div>
+  <div class="ng-scope layout-column">
+
+    <div class="flex-33">First item in column</div>
+    <div class="flex-66">Second item in column</div>
+
+  </div>
+
+</div>
+  
   <!--
     Your HTML content here
   -->  
@@ -21,12 +140,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
   
   <!-- Your application bootstrap  -->
-  <script type="text/javascript">    
-    /**
-     * You must include the dependency on 'ngMaterial' 
-     */
-    angular.module('BlankApp', ['ngMaterial', 'ngMessages']);
-  </script>
+ 
   
 </body>
 </html>
